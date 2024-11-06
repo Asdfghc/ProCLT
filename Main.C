@@ -1,16 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 #include <locale.h>
-#include <time.h>
-#include <math.h>
 #include <ctype.h>
 #include "UTILITIES.h"
 #include "ARVORE.h"
 
 int main() {
-
     setlocale(LC_ALL, "Portuguese");
     
     char opcao[3];
@@ -31,14 +27,14 @@ int main() {
             printf("\t\t8. Sair\n");
             printf("\n\tOpção: ");
             fflush(stdin);
-            fgets(opcao, sizeof(opcao), stdin);         //limpa o cache e coleta 3 digitos e apos transforma em int
+            fgets(opcao, sizeof(opcao), stdin);
             opcaoNum = atoi(opcao);                     
-            if(!digitCheck(opcao) || outOfRange(opcaoNum,8,1))    {     //verifica se todos os caracteres sao numeros e se estao no intervalo correto
+            if(!digitCheck(opcao)) {
                 system("cls");
-                printf("\n\n\n\tErro! \t Digite uma opção válida!\n\n");
+                printf("\n\n\tDigite um número!\n\n");
                 system("pause");
             }
-        }while(!digitCheck(opcao) || outOfRange(opcaoNum,8,1));
+        }while(!digitCheck(opcao));
 
         system("cls");
         switch (opcaoNum) {
@@ -52,7 +48,7 @@ int main() {
                 }
                 int numFuncionarios;
                 fscanf(ARQ, "%d", &numFuncionarios);
-                for (int i = 0; i < 2; i++) {
+                for (int i = 0; i < numFuncionarios; i++) {
                     int matricula, idade;
                     char nome[40], cargo[25];
                     float salario;
@@ -61,27 +57,69 @@ int main() {
                     fscanf(ARQ, "%d", &idade);
                     fgets(cargo, 25, ARQ);
                     fscanf(ARQ, "%f", &salario);
-                    //insereArvore(arvore, matricula, nome, idade, cargo, salario);
-                    printf("\n\n\tMATRICULA %d\n\tNOME %s\n\tIDADE %d\n\tCARGO %s\n\tSALARIO %.2f\n\n", matricula, nome, idade, cargo, salario);
+                    insereArvore(arvore, matricula, nome, idade, cargo, salario);
                 }
-
+                fclose(ARQ);
+                printf("\n\n\tDados inseridos com sucesso\n\n");
+                //imprimeArvore(arvore, 1);
+                system("pause");
                 break;
+
             case 2:
+                No* no;
+                no = buscaArvore(arvore, 4811); //TODO: mudar para input
+                if (no == NULL) {
+                    printf("\n\n\tFuncionário não encontrado\n\n");
+                    system("pause");
+                    break;
+                }
+                imprimeNo(no);
+                printf("\n\n\tDigite o novo nome: ");
+                //TODO: fazer os inputs
+
+                strcpy(no->nome, "Novo Nome"); //TODO: mudar para input
+                no->idade = 25; //TODO: mudar para input
+                strcpy(no->cargo, "Novo Cargo"); //TODO: mudar para input
+                no->salario = 2500.00; //TODO: mudar para input
+                printf("\n\n\tAlteração realizada com sucesso\n\n");
+                system("pause");
                 break;
 
             case 3:
+                insereArvore(arvore, 4811, "Novo Funcionário", 25, "Novo Cargo", 2500.00); //TODO: mudar para input
+                printf("\n\n\tFuncionário inserido com sucesso\n\n");
+                system("pause");
                 break;
 
             case 4:
+                if (removeArvore(arvore, 4811)) printf("\n\n\tFuncionário removido com sucesso\n\n"); //TODO: mudar para input
+                system("pause");
                 break;
+
             case 5:
+                //No* no;
+                no = buscaArvore(arvore, 4811); //TODO: mudar para input
+                if (no == NULL) {
+                    printf("\n\n\tFuncionário não encontrado\n\n");
+                    system("pause");
+                    break;
+                }
+                imprimeNo(no);
+                system("pause");
                 break;
+
             case 6:
                 break;
+
             case 7:
                 break;
+
             case 8:
+                //TODO: salvar no arquivo
+                liberaArvore(arvore);
+                printf("\n\n\tPrograma encerrado\n\n");
                 break;
+
             default:
                 printf("\n\n\t Digite uma opção válida\n\n");
                 system("pause");
