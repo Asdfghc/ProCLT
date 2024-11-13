@@ -245,5 +245,22 @@ void liberaArvore(Arvore* arvore) {
     free(arvore);
 }
 
+void Printa_SubCargo(No* no, char cargo [25], int tipo){
+    if (tipo == 0 && strcmp(no -> cargo, cargo) == 0) imprimeNo(no);
+    if (no->dir != NULL) Printa_SubCargo(no -> dir, cargo, tipo);
+    if (tipo == 1 && strcmp(no -> cargo, cargo) == 0) imprimeNo(no);
+    if (no->esq != NULL) Printa_SubCargo(no -> esq, cargo, tipo);
+    if (tipo == 2 && strcmp(no -> cargo, cargo) == 0) imprimeNo(no);
+}
+
+
+void Printa_Cargo(Arvore* arvore, char cargo [25]){
+    if (arvore -> raiz == NULL) {
+        printf("Árvore vazia\n");
+        return;
+    }
+    No *aux = arvore ->raiz;
+    Printa_SubCargo(aux, cargo, 2);
+}
 
 #endif // ARVORE_H_INCLUDED

@@ -17,7 +17,7 @@ int main() {
     int matricula;
     char inputIdade[4];
     int idade = 0;
-    char cargo[25];
+    char cargo[26];
     char inputSalario[7];
     float salario = 0;
 
@@ -220,6 +220,16 @@ int main() {
                 break;
 
             case 7:
+                    printf("\n\t\tCargo do funcionário: ");
+                    fflush(stdin);
+                    fgets(cargo, sizeof(cargo), stdin);
+                    
+                    char A[26] = " ";
+                    strcat(A, cargo);
+                    int b = 24 - sizeof(cargo)/sizeof(char);
+                    
+                    Printa_Cargo(arvore, cargo);
+                    system("pause");
                 break;
 
             case 8:
