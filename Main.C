@@ -163,8 +163,8 @@ int main() {
                     fflush(stdin);
                     fgets(inputSalario, sizeof(inputSalario), stdin);
                     salario = atoi(inputSalario);
-                    if (outOfRange(salario,999,1) || !digitCheck(inputSalario))     printf("\n\n\tSalário inválido!\n\n");
-                } while(outOfRange(salario,999,1) || !digitCheck(inputSalario));
+                    if (outOfRange(salario,99999,0) || !digitCheck(inputSalario))     printf("\n\n\tSalário inválido!\n\n");
+                } while(outOfRange(salario,99999,0) || !digitCheck(inputSalario));
              
 
                 insereArvore(arvore, matricula, nome, idade, cargo, salario);
@@ -180,17 +180,26 @@ int main() {
                 break;
 
             case 4:
-                printf("\n\n\t\tMatrícula do funcionário: ");
-                scanf("%d", & matricula);
-                if(sizeof(matricula)>4){
-                    printf("\n\n\tMatrícula inválida...\n\n");
-                }
+                do {
+                    printf("\n\t\tMatrícula do funcionário: ");
+                    fflush(stdin);
+                    fgets(inputMatricula, sizeof(inputMatricula), stdin);
+                    matricula = atoi(inputMatricula);
+                    if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula))     printf("\n\n\tMatrícula inválida!\n\n");
+                } while(outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula));
                 if (removeArvore(arvore, matricula)) printf("\n\n\tFuncionário removido com sucesso...\n\n");
                 system("pause");
                 break;
 
             case 5:
                 //No* no;
+                do {
+                    printf("\n\t\tMatrícula do funcionário: ");
+                    fflush(stdin);
+                    fgets(inputMatricula, sizeof(inputMatricula), stdin);
+                    matricula = atoi(inputMatricula);
+                    if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula))     printf("\n\n\tMatrícula inválida!\n\n");
+                } while(outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula));
                 no = buscaArvore(arvore, matricula);
                 if (no == NULL) {
                     printf("\n\n\tFuncionário não encontrado...\n\n");
