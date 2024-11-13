@@ -111,7 +111,7 @@ int main() {
                 strcpy(no->cargo, cargo);
 
                 do {
-                    printf("\n\n\tSalário: ");        //coleta do tempo e verifica se sao digitos, e se ta no intervalo de 1 a 999
+                    printf("\n\n\tSalário: ");      
                     fflush(stdin);
                     fgets(inputSalario, sizeof(inputSalario), stdin);
                     salario = atoi(inputSalario);
@@ -131,39 +131,49 @@ int main() {
                 break;
 
             case 3:
-                printf("\n\n\t\tMatrícula do funcionário: ");
-                scanf("%d", & matricula);
-                if(sizeof(matricula)>4){
-                    printf("\n\n\tMatrícula inválida...\n\n");
-                }
-                no->matricula -  matricula;
+                do {
+                    printf("\n\t\tMatrícula do funcionário: ");
+                    fflush(stdin);
+                    fgets(inputMatricula, sizeof(inputMatricula), stdin);
+                    matricula = atoi(inputMatricula);
+                    if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula))     printf("\n\n\tMatrícula inválida!\n\n");
+                } while(outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula));
+
 
                 printf("\n\n\t\t\tNome: ");
-                scanf("%s", nome);
-                strcpy(no->nome, nome);
+                fflush(stdin);
+                fgets(nome, sizeof(nome), stdin);
 
-                printf("\n\n\t\t\tIdade: ");
-                scanf("%d", idade);
-                if(idade > 99){
-                    printf("\n\n\t\tIdadade inválida...");
-                }
-                no->idade = idade;
+                do {
+                    printf("\n\n\tIdade: ");
+                    fflush(stdin);
+                    fgets(inputIdade, sizeof(inputIdade), stdin);
+                    idade = atoi(inputIdade);
+                    if (outOfRange(idade,99,1) || !digitCheck(inputIdade))     printf("\n\n\tIdade inválida!\n\n");
+                } while(outOfRange(idade,99,1) || !digitCheck(inputIdade));
+                
 
                 printf("\n\n\t\t\tCargo: ");
-                scanf("%d", cargo);
-                strcpy(no->cargo, cargo);
+                fflush(stdin);
+                fgets(cargo, sizeof(cargo), stdin);
+                
 
-                printf("\n\n\t\t\tSalário: ");
-                scanf("%.2f", salario);
-                no->salario = salario;
+                do {
+                    printf("\n\n\tSalário: ");   
+                    fflush(stdin);
+                    fgets(inputSalario, sizeof(inputSalario), stdin);
+                    salario = atoi(inputSalario);
+                    if (outOfRange(salario,999,1) || !digitCheck(inputSalario))     printf("\n\n\tSalário inválido!\n\n");
+                } while(outOfRange(salario,999,1) || !digitCheck(inputSalario));
+             
 
                 insereArvore(arvore, matricula, nome, idade, cargo, salario);
 
-                memset(nome, 0, sizeof(nome));
-                memset(cargo, 0, sizeof(cargo));
-                idade = 0;
-                salario = 0;
-                matricula = 0;
+                //memset(nome, 0, sizeof(nome));
+                //memset(cargo, 0, sizeof(cargo));
+                // idade = 0;
+                //salario = 0;
+                //matricula = 0;
 
                 printf("\n\n\tFuncionário inserido com sucesso...\n\n");
                 system("pause");
