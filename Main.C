@@ -22,6 +22,7 @@ int main() {
     float salario = 0;
 
     Arvore *arvore = criaArvore();
+    No* no;
 
     do {
         do {
@@ -75,7 +76,6 @@ int main() {
                 break;
 
             case 2:
-                No* no;
                 do {
                     printf("\n\t\tMatrícula do funcionário: ");
                     fflush(stdin);
@@ -211,6 +211,8 @@ int main() {
                 break;
 
             case 6:
+                printf("\n\n\tFuncionário mais velho: %d anos\n", maiorIdadeArvore(arvore));
+                //printf("\n\n\tFuncionário mais novo: %d anos\n", menorIdadeArvore(arvore));
                 break;
 
             case 7:
