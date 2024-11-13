@@ -82,6 +82,47 @@ void imprimeArvore(Arvore* arvore, int tipo) {
     printf("\n");
 }
 
+No* maiorIdadeSubArvore(No* no, int maiorIdade) {
+    if (no->dir == NULL && no->dir == NULL) {
+        return no;
+    }
+    if (no->dir == NULL && no->esq != NULL) {
+        if (maiorIdadeSubArvore(no -> esq, maiorIdade)->idade > maiorIdade) {
+            return maiorIdadeSubArvore(no -> esq, maiorIdade);
+        }
+    }
+    if (no->esq == NULL && no->dir != NULL) {
+        if (maiorIdadeSubArvore(no -> dir, maiorIdade)->idade > maiorIdade) {
+            return maiorIdadeSubArvore(no -> dir, maiorIdade);
+        }
+    }
+    if (no->esq != NULL && no->dir != NULL) {
+        if (maiorIdadeSubArvore(no -> dir, maiorIdade)->idade > maiorIdade) {
+            if (maiorIdadeSubArvore(no -> esq, maiorIdade)->idade > maiorIdade) {
+                if (maiorIdadeSubArvore(no -> dir, maiorIdade)->idade > maiorIdadeSubArvore(no -> esq, maiorIdade)->idade) {
+                    return maiorIdadeSubArvore(no -> dir, maiorIdade);
+                } else {
+                    return maiorIdadeSubArvore(no -> esq, maiorIdade);
+                }
+            } else {
+                return maiorIdadeSubArvore(no -> dir, maiorIdade);
+            }
+        } else {
+            if (maiorIdadeSubArvore(no -> esq, maiorIdade)->idade > maiorIdade) {
+                return maiorIdadeSubArvore(no -> esq, maiorIdade);
+            }
+        }
+    }        
+}
+
+int maiorIdadeArvore(Arvore* arvore) {
+    if (arvore -> raiz == NULL) {
+        printf("Árvore vazia\n");
+        return 0;
+    }
+    return maiorIdadeSubArvore(arvore -> raiz, 0) -> idade;
+}
+
 No* removeSubArvore(No* pai, int matricula) {
     if (pai == NULL) {
         printf("Nó %d não encontrado na árvore\n", matricula);
