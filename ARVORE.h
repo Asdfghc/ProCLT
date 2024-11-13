@@ -83,9 +83,6 @@ void imprimeArvore(Arvore* arvore, int tipo) {
 }
 
 No* maiorIdadeSubArvore(No* no, int maiorIdade) {
-    if (no->dir == NULL && no->dir == NULL) {
-        return no;
-    }
     if (no->dir == NULL && no->esq != NULL) {
         if (maiorIdadeSubArvore(no -> esq, maiorIdade)->idade > maiorIdade) {
             return maiorIdadeSubArvore(no -> esq, maiorIdade);
@@ -113,6 +110,7 @@ No* maiorIdadeSubArvore(No* no, int maiorIdade) {
             }
         }
     }        
+    return no;
 }
 
 int maiorIdadeArvore(Arvore* arvore) {
@@ -121,6 +119,45 @@ int maiorIdadeArvore(Arvore* arvore) {
         return 0;
     }
     return maiorIdadeSubArvore(arvore -> raiz, 0) -> idade;
+}
+
+No* menorIdadeSubArvore(No* no, int menorIdade) {
+    if (no->dir == NULL && no->esq != NULL) {
+        if (menorIdadeSubArvore(no -> esq, menorIdade)->idade < menorIdade) {
+            return menorIdadeSubArvore(no -> esq, menorIdade);
+        }
+    }
+    if (no->esq == NULL && no->dir != NULL) {
+        if (menorIdadeSubArvore(no -> dir, menorIdade)->idade < menorIdade) {
+            return menorIdadeSubArvore(no -> dir, menorIdade);
+        }
+    }
+    if (no->esq != NULL && no->dir != NULL) {
+        if (menorIdadeSubArvore(no -> dir, menorIdade)->idade < menorIdade) {
+            if (menorIdadeSubArvore(no -> esq, menorIdade)->idade < menorIdade) {
+                if (menorIdadeSubArvore(no -> dir, menorIdade)->idade < menorIdadeSubArvore(no -> esq, menorIdade)->idade) {
+                    return menorIdadeSubArvore(no -> dir, menorIdade);
+                } else {
+                    return menorIdadeSubArvore(no -> esq, menorIdade);
+                }
+            } else {
+                return menorIdadeSubArvore(no -> dir, menorIdade);
+            }
+        } else {
+            if (menorIdadeSubArvore(no -> esq, menorIdade)->idade < menorIdade) {
+                return menorIdadeSubArvore(no -> esq, menorIdade);
+            }
+        }
+    }        
+    return no;
+}
+
+int menorIdadeArvore(Arvore* arvore) {
+    if (arvore -> raiz == NULL) {
+        printf("Árvore vazia\n");
+        return 0;
+    }
+    return menorIdadeSubArvore(arvore -> raiz, 99) -> idade;
 }
 
 No* removeSubArvore(No* pai, int matricula) {

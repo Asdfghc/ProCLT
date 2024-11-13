@@ -52,7 +52,7 @@ int main() {
                 FILE *ARQ;
                 ARQ = fopen("Dados.txt", "r");
                 if (ARQ == NULL) {
-                    printf("\n\n\tErro ao abrir o arquivo...\n\n");
+                    printf("\n\n\tErro ao abrir o arquivo!\n\n");
                     system("pause");
                     break;
                 }
@@ -192,7 +192,6 @@ int main() {
                 break;
 
             case 5:
-                //No* no;
                 do {
                     printf("\n\t\tMatrícula do funcionário: ");
                     fflush(stdin);
@@ -202,7 +201,7 @@ int main() {
                 } while(outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula));
                 no = buscaArvore(arvore, matricula);
                 if (no == NULL) {
-                    printf("\n\n\tFuncionário não encontrado...\n\n");
+                    printf("\n\n\tFuncionário não encontrado!\n\n");
                     system("pause");
                     break;
                 }
@@ -211,8 +210,13 @@ int main() {
                 break;
 
             case 6:
-                printf("\n\n\tFuncionário mais velho: %d anos\n", maiorIdadeArvore(arvore));
-                //printf("\n\n\tFuncionário mais novo: %d anos\n", menorIdadeArvore(arvore));
+                if (maiorIdadeArvore(arvore) != 0) {
+                    printf("\n\n\tFuncionário mais velho: %d anos\n", maiorIdadeArvore(arvore));
+                }
+                if (menorIdadeArvore(arvore) != 0) {
+                    printf("\n\n\tFuncionário mais novo: %d anos\n", menorIdadeArvore(arvore));
+                }
+                system("pause");
                 break;
 
             case 7:
@@ -225,7 +229,7 @@ int main() {
                 break;
 
             default:
-                printf("\n\n\tDigite uma opção válida...\n\n");
+                printf("\n\n\tDigite uma opção válida!\n\n");
                 system("pause");
                 break;
         }
