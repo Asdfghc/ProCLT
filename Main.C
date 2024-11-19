@@ -34,7 +34,8 @@ int main() {
             printf("\t\t5. Buscar as informações de um funcionário\n");
             printf("\t\t6. Buscar o funcionário mais novo e mais velho\n");
             printf("\t\t7. Buscar todos os funcionários de um cargo\n");
-            printf("\t\t8. Sair\n");
+            printf("\t\t8. Imprimir a árvore de funcionários\n");
+            printf("\t\t9. Sair\n");
             printf("\n\tOpção: ");
             fflush(stdin);
             fgets(opcao, sizeof(opcao), stdin);
@@ -60,7 +61,7 @@ int main() {
                 fscanf(ARQ, "%d", &numFuncionarios);
                 for (int i = 0; i < numFuncionarios; i++) {
                     int matricula, idade;
-                    char nome[40], cargo[25];
+                    char nome[40], cargo[26];
                     float salario;
                     fscanf(ARQ, "%d", &matricula);
                     fgets(nome, 40, ARQ);
@@ -223,18 +224,37 @@ int main() {
                     printf("\n\t\tCargo do funcionário: ");
                     fflush(stdin);
                     fgets(cargo, sizeof(cargo), stdin);
-
-                    printf("%s", cargo);
-
-                    aumenta_string(cargo);
-
-                    printf("%s", cargo);
-                    
-                    Printa_Cargo(arvore, cargo);
+                    system("cls");
+                    printf("\n\n\tFuncionários com o cargo de %s\n:", cargo);
+                    aumentaString(cargo);
+                    imprimeCargo(arvore, cargo);
                     system("pause");
                 break;
 
             case 8:
+                do {
+                    system("cls");
+                    printf("\n\n\tComo deseja a impressão?\n");
+                    printf("\t\t1. Pré-ordem\n");
+                    printf("\t\t2. Em ordem\n");
+                    printf("\t\t3. Pós-ordem\n");
+                    printf("\n\tOpção: ");
+                    fflush(stdin);
+                    fgets(opcao, sizeof(opcao), stdin);
+                    opcaoNum = atoi(opcao);
+                    if(!digitCheck(opcao) || outOfRange(opcaoNum,3,1)) {
+                        system("cls");
+                        printf("\n\n\tDigite um número válido!\n\n");
+                        system("pause");
+                    }
+
+                }while(!digitCheck(opcao) || outOfRange(opcaoNum,3,1));
+                system("cls");
+                imprimeArvore(arvore, opcaoNum-1);
+                system("pause");
+                break;
+            
+            case 9:
                 //TODO: salvar no arquivo
                 liberaArvore(arvore);
                 printf("\n\n\tPrograma encerrado...\n\n");
@@ -245,5 +265,5 @@ int main() {
                 system("pause");
                 break;
         }
-    } while (opcaoNum != 8);
+    } while (opcaoNum != 9);
 }
