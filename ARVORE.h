@@ -246,11 +246,15 @@ void liberaArvore(Arvore* arvore) {
 }
 
 void Printa_SubCargo(No* no, char cargo [25], int tipo){
+    printf("chegou ate aqui no Printa_SubCargo hein");
     if (tipo == 0 && strcmp(no -> cargo, cargo) == 0) imprimeNo(no);
     if (no->dir != NULL) Printa_SubCargo(no -> dir, cargo, tipo);
     if (tipo == 1 && strcmp(no -> cargo, cargo) == 0) imprimeNo(no);
     if (no->esq != NULL) Printa_SubCargo(no -> esq, cargo, tipo);
     if (tipo == 2 && strcmp(no -> cargo, cargo) == 0) imprimeNo(no);
+    if(strcmp(no -> cargo, cargo) == 0){
+        printf("IGUAAAAAAL"); //n sei pq mas aqui ele nem printa que esta igual
+    }
 }
 
 

@@ -22,4 +22,19 @@ bool outOfRange(int number, int max, int min) {
     return false;
 }
 
+void aumenta_string (char str[26]){
+    int tamanho = 26; 
+    int len = strlen(str);
+    if (len > 0 && str[len - 1] == '\n') {
+        str[len - 1] = '\0';
+         len--;
+    }
+    if(len < tamanho){    
+        for(int i = len; i < tamanho; i++){
+            str[i] = ' ';
+        }
+        str[tamanho - 1] = '\0';
+    }
+}
+
 #endif //UTILITIES_H_INCLUDED

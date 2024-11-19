@@ -223,10 +223,12 @@ int main() {
                     printf("\n\t\tCargo do funcionário: ");
                     fflush(stdin);
                     fgets(cargo, sizeof(cargo), stdin);
-                    
-                    char A[26] = " ";
-                    strcat(A, cargo);
-                    int b = 24 - sizeof(cargo)/sizeof(char);
+
+                    printf("%s", cargo);
+
+                    aumenta_string(cargo);
+
+                    printf("%s", cargo);
                     
                     Printa_Cargo(arvore, cargo);
                     system("pause");
