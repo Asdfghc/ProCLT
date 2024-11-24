@@ -256,12 +256,10 @@ void liberaArvore(Arvore* arvore) {
     free(arvore);
 }
 
-void imprimeSubCargo(No* no, char cargo [26], int tipo){
-    if (tipo == 0 && strcmp(no -> cargo, cargo) == 0) imprimeNo(no);
-    if (no->dir != NULL) imprimeSubCargo(no -> dir, cargo, tipo);
-    if (tipo == 1 && strcmp(no -> cargo, cargo) == 0) imprimeNo(no);
-    if (no->esq != NULL) imprimeSubCargo(no -> esq, cargo, tipo);
-    if (tipo == 2 && strcmp(no -> cargo, cargo) == 0) imprimeNo(no);
+void imprimeSubCargo(No* no, char cargo [26]){
+    if (no->dir != NULL) imprimeSubCargo(no -> dir, cargo);
+    if (strcmp(no -> cargo, cargo) == 0) imprimeNo(no);
+    if (no->esq != NULL) imprimeSubCargo(no -> esq, cargo);
 }
 
 
@@ -270,8 +268,7 @@ void imprimeCargo(Arvore* arvore, char cargo [25]){
         printf("Árvore vazia\n");
         return;
     }
-    No *aux = arvore ->raiz;
-    imprimeSubCargo(aux, cargo, 1);
+    imprimeSubCargo(arvore ->raiz, cargo);
 }
 
 int contarNos(No* no) {

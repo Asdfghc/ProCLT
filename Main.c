@@ -62,31 +62,29 @@ int main() {
                 }
                 int numFuncionarios;
                 fscanf(ARQ, "%d", &numFuncionarios);
-                 for (int i = 0; i < numFuncionarios; i++) {
-                    int matricula, idade;
-                    char nome[40], cargo[26], salarioString[16];
-                    float salario;
-                    fscanf(ARQ, "%d", &matricula);
-                    fgetc(ARQ);
-                    fgets(nome, 40, ARQ);
-                    fscanf(ARQ, "%d", &idade);
-                    fgetc(ARQ);
-                    fgets(cargo, 25, ARQ);
-                    fscanf(ARQ, "%15s\n", salarioString);     
-
-                    for (int j = 0; salarioString[j] != '\0'; j++) {
-                        if (salarioString[j] == ',') {
-                            salarioString[j] = '.';
-                            break;
-                        }
-                    }
-                    salario = atof(salarioString);            
-                    insereArvore(arvore, matricula, nome, idade, cargo, salario);
+                for (int i = 0; i < numFuncionarios; i++) {
+                   char salarioString[16];
+                   fscanf(ARQ, "%d", &matricula);
+                   fgetc(ARQ);
+                   fgets(nome, 40, ARQ);
+                   nome[strcspn(nome, "\n")] = '\0';
+                   fscanf(ARQ, "%d", &idade);
+                   fgetc(ARQ);
+                   fgets(cargo, 25, ARQ);
+                   cargo[strcspn(cargo, "\n")] = '\0';           
+                   fscanf(ARQ, "%15s\n", salarioString);     
+                   for (int j = 0; salarioString[j] != '\0'; j++) {
+                       if (salarioString[j] == ',') {
+                           salarioString[j] = '.';
+                           break;
+                       }
+                   }
+                   salario = atof(salarioString);
+                   insereArvore(arvore, matricula, nome, idade, cargo, salario);
                 }
 
                 fclose(ARQ);
                 printf("\n\n\tDados inseridos com sucesso...\n\n");
-                //imprimeArvore(arvore, 1);
                 printf("Pressione Enter para continuar...");
                 system("pause");
                 break;
@@ -98,7 +96,7 @@ int main() {
                     fgets(inputMatricula, sizeof(inputMatricula), stdin);
                     matricula = atoi(inputMatricula);
                     if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula))     printf("\n\n\tMatrícula inválida!\n\n");
-                } while(outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula) && existeNaArvore(arvore,matricula));
+                } while(outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula) || existeNaArvore(arvore,matricula));
                 no = buscaArvore(arvore, matricula);
                 if (no == NULL) {
                     printf("\n\n\tFuncionário não encontrado...\n\n");
@@ -241,9 +239,11 @@ int main() {
                     printf("\n\t\tCargo do funcionário: ");
                     fflush(stdin);
                     fgets(cargo, sizeof(cargo), stdin);
-                    system("cls");
-                    printf("\n\n\tFuncionários com o cargo de %s\n:", cargo);
+                    cargo[strcspn(cargo, "\n")] = '\0';
+                    toUpperString(cargo);   
                     aumentaStringCargo(cargo);
+                    system("cls");
+                    printf("\n\n\tFuncionários com o cargo de %s: \n", cargo);
                     imprimeCargo(arvore, cargo);
                     printf("Pressione Enter para continuar..."); 
                     system("pause");

@@ -40,4 +40,10 @@ void aumentaStringNome (char str[41]){
     }
 }
 
+void toUpperString(char* str){
+    for(int i=0; str[i]!='\0';i++){
+        str[i]=toupper((unsigned char) str[i]);
+    }
+}
+
 #endif //UTILITIES_H_INCLUDED
