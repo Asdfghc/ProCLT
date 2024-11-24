@@ -14,19 +14,30 @@ bool outOfRange(int number, int max, int min) {
     return false;
 }
 
-void aumentaString (char str[26]){
+void aumentaStringCargo (char str[26]){
     int tamanho = 24; 
-    int len = strlen(str);
+    size_t len = strlen(str);
 
-    for (int i = len-1; i >= 0; i--) {
-        str[i + 1] = str[i];
+    if (len > 0 && str[len - 1] == '\n') {
+        str[len - 1] = '\0';
     }
-    str[0] = ' ';
     
     for(int i = len; i < tamanho; i++){
         str[i] = ' ';
     }
-    str[tamanho] = '\0';
+}
+
+void aumentaStringNome (char str[41]){
+    int tamanho = 39; 
+    size_t len = strlen(str);
+
+    if (len > 0 && str[len - 1] == '\n') {
+        str[len - 1] = '\0';
+    }
+    
+    for(int i = len; i < tamanho; i++){
+        str[i] = ' ';
+    }
 }
 
 #endif //UTILITIES_H_INCLUDED

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 #include <locale.h>
 #include <ctype.h>
@@ -12,13 +13,13 @@ int main() {
     char opcao[3];
     int opcaoNum = 0;
 
-    char nome[40];
+    char nome[41];
     char inputMatricula[6];
     int matricula;
     char inputIdade[4];
     int idade = 0;
     char cargo[26];
-    char inputSalario[7];
+    char inputSalario[16];
     float salario = 0;
 
     Arvore *arvore = criaArvore();
@@ -43,6 +44,7 @@ int main() {
             if(!digitCheck(opcao)) {
                 system("cls");
                 printf("\n\n\tDigite um número!\n\n");
+                printf("Pressione Enter para continuar..."); 
                 system("pause");
             }
         }while(!digitCheck(opcao));
@@ -54,25 +56,38 @@ int main() {
                 ARQ = fopen("Dados.txt", "r");
                 if (ARQ == NULL) {
                     printf("\n\n\tErro ao abrir o arquivo!\n\n");
+                    printf("Pressione Enter para continuar...");
                     system("pause");
                     break;
                 }
                 int numFuncionarios;
                 fscanf(ARQ, "%d", &numFuncionarios);
-                for (int i = 0; i < numFuncionarios; i++) {
+                 for (int i = 0; i < numFuncionarios; i++) {
                     int matricula, idade;
-                    char nome[40], cargo[26];
+                    char nome[40], cargo[26], salarioString[16];
                     float salario;
                     fscanf(ARQ, "%d", &matricula);
+                    fgetc(ARQ);
                     fgets(nome, 40, ARQ);
                     fscanf(ARQ, "%d", &idade);
+                    fgetc(ARQ);
                     fgets(cargo, 25, ARQ);
-                    fscanf(ARQ, "%f", &salario);
+                    fscanf(ARQ, "%15s\n", salarioString);     
+
+                    for (int j = 0; salarioString[j] != '\0'; j++) {
+                        if (salarioString[j] == ',') {
+                            salarioString[j] = '.';
+                            break;
+                        }
+                    }
+                    salario = atof(salarioString);            
                     insereArvore(arvore, matricula, nome, idade, cargo, salario);
                 }
+
                 fclose(ARQ);
                 printf("\n\n\tDados inseridos com sucesso...\n\n");
                 //imprimeArvore(arvore, 1);
+                printf("Pressione Enter para continuar...");
                 system("pause");
                 break;
 
@@ -83,10 +98,11 @@ int main() {
                     fgets(inputMatricula, sizeof(inputMatricula), stdin);
                     matricula = atoi(inputMatricula);
                     if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula))     printf("\n\n\tMatrícula inválida!\n\n");
-                } while(outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula));
+                } while(outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula) && existeNaArvore(arvore,matricula));
                 no = buscaArvore(arvore, matricula);
                 if (no == NULL) {
                     printf("\n\n\tFuncionário não encontrado...\n\n");
+                    printf("Pressione Enter para continuar..."); 
                     system("pause");
                     break;
                 }
@@ -95,6 +111,7 @@ int main() {
                 printf("\n\n\t\t\tNome: ");
                 fflush(stdin);
                 fgets(nome, sizeof(nome), stdin);
+                aumentaStringNome(nome);
                 strcpy(no->nome, nome);
 
                 do {
@@ -109,6 +126,7 @@ int main() {
                 printf("\n\n\t\t\tCargo: ");
                 fflush(stdin);
                 fgets(cargo, sizeof(cargo), stdin);
+                aumentaStringCargo(cargo);
                 strcpy(no->cargo, cargo);
 
                 do {
@@ -116,18 +134,13 @@ int main() {
                     fflush(stdin);
                     fgets(inputSalario, sizeof(inputSalario), stdin);
                     salario = atoi(inputSalario);
-                    if (outOfRange(salario,999,1) || !digitCheck(inputSalario))     printf("\n\n\tSalário inválido!\n\n");
-                } while(outOfRange(salario,999,1) || !digitCheck(inputSalario));
+                    if (outOfRange(salario,99999,1) || !digitCheck(inputSalario))     printf("\n\n\tSalário inválido!\n\n");
+                } while(outOfRange(salario,99999,1) || !digitCheck(inputSalario));
                 no->salario = salario;
 
                 printf("\n\n\tAlteração realizada com sucesso...\n\n");
 
-                //memset(nome, 0, sizeof(nome));
-                //memset(cargo, 0, sizeof(cargo));
-                //idade = 0;
-                //salario = 0;
-                //matricula = 0;
-
+                printf("Pressione Enter para continuar..."); 
                 system("pause");
                 break;
 
@@ -137,13 +150,14 @@ int main() {
                     fflush(stdin);
                     fgets(inputMatricula, sizeof(inputMatricula), stdin);
                     matricula = atoi(inputMatricula);
-                    if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula))     printf("\n\n\tMatrícula inválida!\n\n");
-                } while(outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula));
-
+                    if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula) || existeNaArvore(arvore,matricula))     printf("\n\n\tMatrícula inválida ou ja existente!\n\n");
+                } while(outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula) || existeNaArvore(arvore,matricula));
 
                 printf("\n\n\t\t\tNome: ");
                 fflush(stdin);
                 fgets(nome, sizeof(nome), stdin);
+                aumentaStringNome(nome);
+
 
                 do {
                     printf("\n\n\tIdade: ");
@@ -157,6 +171,8 @@ int main() {
                 printf("\n\n\t\t\tCargo: ");
                 fflush(stdin);
                 fgets(cargo, sizeof(cargo), stdin);
+                aumentaStringCargo(cargo);
+                
                 
 
                 do {
@@ -170,13 +186,10 @@ int main() {
 
                 insereArvore(arvore, matricula, nome, idade, cargo, salario);
 
-                //memset(nome, 0, sizeof(nome));
-                //memset(cargo, 0, sizeof(cargo));
-                // idade = 0;
-                //salario = 0;
-                //matricula = 0;
+                
 
                 printf("\n\n\tFuncionário inserido com sucesso...\n\n");
+                printf("Pressione Enter para continuar..."); 
                 system("pause");
                 break;
 
@@ -189,6 +202,7 @@ int main() {
                     if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula))     printf("\n\n\tMatrícula inválida!\n\n");
                 } while(outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula));
                 if (removeArvore(arvore, matricula)) printf("\n\n\tFuncionário removido com sucesso...\n\n");
+                printf("Pressione Enter para continuar..."); 
                 system("pause");
                 break;
 
@@ -203,10 +217,12 @@ int main() {
                 no = buscaArvore(arvore, matricula);
                 if (no == NULL) {
                     printf("\n\n\tFuncionário não encontrado!\n\n");
+                    printf("Pressione Enter para continuar..."); 
                     system("pause");
                     break;
                 }
                 imprimeNo(no);
+                printf("Pressione Enter para continuar...");
                 system("pause");
                 break;
 
@@ -217,6 +233,7 @@ int main() {
                 if (menorIdadeArvore(arvore) != 0) {
                     printf("\n\n\tFuncionário mais novo: %d anos\n", menorIdadeArvore(arvore));
                 }
+                printf("Pressione Enter para continuar..."); 
                 system("pause");
                 break;
 
@@ -226,8 +243,9 @@ int main() {
                     fgets(cargo, sizeof(cargo), stdin);
                     system("cls");
                     printf("\n\n\tFuncionários com o cargo de %s\n:", cargo);
-                    aumentaString(cargo);
+                    aumentaStringCargo(cargo);
                     imprimeCargo(arvore, cargo);
+                    printf("Pressione Enter para continuar..."); 
                     system("pause");
                 break;
 
@@ -245,23 +263,36 @@ int main() {
                     if(!digitCheck(opcao) || outOfRange(opcaoNum,3,1)) {
                         system("cls");
                         printf("\n\n\tDigite um número válido!\n\n");
+                        printf("Pressione Enter para continuar..."); 
                         system("pause");
                     }
 
                 }while(!digitCheck(opcao) || outOfRange(opcaoNum,3,1));
                 system("cls");
                 imprimeArvore(arvore, opcaoNum-1);
+                printf("Pressione Enter para continuar..."); 
                 system("pause");
                 break;
             
             case 9:
-                //TODO: salvar no arquivo
-                liberaArvore(arvore);
-                printf("\n\n\tPrograma encerrado...\n\n");
+                FILE *arquivo = fopen("Dados.txt", "w");
+                if (arquivo == NULL) {
+                    printf("\n\n\tErro ao abrir o arquivo para salvar os dados!\n\n");
+                    break;
+                }
+
+                fprintf(arquivo, "%d\n", contarNos(arvore->raiz));
+                salvarArvore(arvore->raiz, arquivo);              
+                fclose(arquivo);                                  
+
+                liberaArvore(arvore);                             
+                printf("\n\n\tDados salvos e memória liberada. Programa encerrado...\n\n");
+                
                 break;
 
             default:
                 printf("\n\n\tDigite uma opção válida!\n\n");
+                printf("Pressione Enter para continuar..."); 
                 system("pause");
                 break;
         }

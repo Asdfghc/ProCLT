@@ -7,7 +7,7 @@
 
 typedef struct No {
     int matricula, idade;
-    char nome[40], cargo[25];
+    char nome[41], cargo[26];
     float salario;
     struct No *esq, *dir;
 } No;
@@ -234,6 +234,17 @@ No* buscaArvore(Arvore* arvore, int matricula) {
     return NULL;
 }
 
+bool existeNaArvore(Arvore* arvore, int matricula) {
+    if (arvore->raiz == NULL) {
+        printf("\n\t\tÁrvore vazia\n");
+        return NULL;
+    }
+    No* no = buscaArvore(arvore, matricula);
+    if (no != NULL) {
+        return true;
+    }
+    return false;
+}
 void liberaSubArvore(No* no) {
     if (no->esq != NULL) liberaSubArvore(no -> esq);
     if (no->dir != NULL) liberaSubArvore(no -> dir);
@@ -263,4 +274,37 @@ void imprimeCargo(Arvore* arvore, char cargo [25]){
     imprimeSubCargo(aux, cargo, 1);
 }
 
-#endif // ARVORE_H_INCLUDED
+int contarNos(No* no) {
+    if (no == NULL) return 0;
+    return 1 + contarNos(no->esq) + contarNos(no->dir);
+}
+
+void salvarArvore(No* no, FILE* arquivo) {
+    if (no == NULL) return;
+
+    
+    salvarArvore(no->esq, arquivo);
+
+    char salarioString[16];
+    snprintf(salarioString, sizeof(salarioString), "%.2f", no->salario);
+
+    for (int i = 0; salarioString[i] != '\0'; i++) {
+        if (salarioString[i] == '.') {
+            salarioString[i] = ',';
+            break;
+        }
+    }
+    
+    fprintf(arquivo, "%-4d %-40s %-2d %-25s %15s\n",
+            no->matricula,       
+            no->nome,            
+            no->idade,           
+            no->cargo,           
+            salarioString);        
+
+    
+    salvarArvore(no->dir, arquivo);
+}
+
+
+#endif 
