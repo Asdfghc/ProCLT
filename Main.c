@@ -27,7 +27,7 @@ int main() {
 
     do {
         do {
-            system("cls");
+            clearScreen();
             printf("\n\t\t1. Inserir os dados\n");
             printf("\t\t2. Alterar um dado\n");
             printf("\t\t3. Incluir novo funcionário\n");
@@ -42,14 +42,14 @@ int main() {
             fgets(opcao, sizeof(opcao), stdin);
             opcaoNum = atoi(opcao);                     
             if(!digitCheck(opcao)) {
-                system("cls");
+                clearScreen();
                 printf("\n\n\tDigite um número!\n\n");
                 printf("Pressione Enter para continuar..."); 
-                system("pause");
+                pauseScreen();
             }
         }while(!digitCheck(opcao));
 
-        system("cls");
+        clearScreen();
         switch (opcaoNum) {
             case 1:
                 FILE *ARQ;
@@ -57,7 +57,7 @@ int main() {
                 if (ARQ == NULL) {
                     printf("\n\n\tErro ao abrir o arquivo!\n\n");
                     printf("Pressione Enter para continuar...");
-                    system("pause");
+                    pauseScreen();
                     break;
                 }
                 int numFuncionarios;
@@ -86,7 +86,7 @@ int main() {
                 fclose(ARQ);
                 printf("\n\n\tDados inseridos com sucesso...\n\n");
                 printf("Pressione Enter para continuar...");
-                system("pause");
+                pauseScreen();
                 break;
 
             case 2:
@@ -101,7 +101,7 @@ int main() {
                 if (no == NULL) {
                     printf("\n\n\tFuncionário não encontrado...\n\n");
                     printf("Pressione Enter para continuar..."); 
-                    system("pause");
+                    pauseScreen();
                     break;
                 }
                 imprimeNo(no);
@@ -139,7 +139,7 @@ int main() {
                 printf("\n\n\tAlteração realizada com sucesso...\n\n");
 
                 printf("Pressione Enter para continuar..."); 
-                system("pause");
+                pauseScreen();
                 break;
 
             case 3:
@@ -188,7 +188,7 @@ int main() {
 
                 printf("\n\n\tFuncionário inserido com sucesso...\n\n");
                 printf("Pressione Enter para continuar..."); 
-                system("pause");
+                pauseScreen();
                 break;
 
             case 4:
@@ -201,7 +201,7 @@ int main() {
                 } while(outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula));
                 if (removeArvore(arvore, matricula)) printf("\n\n\tFuncionário removido com sucesso...\n\n");
                 printf("Pressione Enter para continuar..."); 
-                system("pause");
+                pauseScreen();
                 break;
 
             case 5:
@@ -216,12 +216,12 @@ int main() {
                 if (no == NULL) {
                     printf("\n\n\tFuncionário não encontrado!\n\n");
                     printf("Pressione Enter para continuar..."); 
-                    system("pause");
+                    pauseScreen();
                     break;
                 }
                 imprimeNo(no);
                 printf("Pressione Enter para continuar...");
-                system("pause");
+                pauseScreen();
                 break;
 
             case 6:
@@ -232,7 +232,7 @@ int main() {
                     printf("\n\n\tFuncionário mais novo: %d anos\n", menorIdadeArvore(arvore));
                 }
                 printf("Pressione Enter para continuar..."); 
-                system("pause");
+                pauseScreen();
                 break;
 
             case 7:
@@ -242,16 +242,16 @@ int main() {
                     cargo[strcspn(cargo, "\n")] = '\0';
                     toUpperString(cargo);   
                     aumentaStringCargo(cargo);
-                    system("cls");
+                    clearScreen();
                     printf("\n\n\tFuncionários com o cargo de %s: \n", cargo);
                     imprimeCargo(arvore, cargo);
                     printf("Pressione Enter para continuar..."); 
-                    system("pause");
+                    pauseScreen();
                 break;
 
             case 8:
                 do {
-                    system("cls");
+                    clearScreen();
                     printf("\n\n\tComo deseja a impressão?\n");
                     printf("\t\t1. Pré-ordem\n");
                     printf("\t\t2. Em ordem\n");
@@ -261,17 +261,17 @@ int main() {
                     fgets(opcao, sizeof(opcao), stdin);
                     opcaoNum = atoi(opcao);
                     if(!digitCheck(opcao) || outOfRange(opcaoNum,3,1)) {
-                        system("cls");
+                        clearScreen();
                         printf("\n\n\tDigite um número válido!\n\n");
                         printf("Pressione Enter para continuar..."); 
-                        system("pause");
+                        pauseScreen();
                     }
 
                 }while(!digitCheck(opcao) || outOfRange(opcaoNum,3,1));
-                system("cls");
+                clearScreen();
                 imprimeArvore(arvore, opcaoNum-1);
                 printf("Pressione Enter para continuar..."); 
-                system("pause");
+                pauseScreen();
                 break;
             
             case 9:
@@ -293,7 +293,7 @@ int main() {
             default:
                 printf("\n\n\tDigite uma opção válida!\n\n");
                 printf("Pressione Enter para continuar..."); 
-                system("pause");
+                pauseScreen();
                 break;
         }
     } while (opcaoNum != 9);

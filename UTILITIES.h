@@ -1,6 +1,22 @@
 #ifndef UTILITIES_H_INCLUDED
 #define UTILITIES_H_INCLUDED
 
+void clearScreen(){
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
+
+void pauseScreen(){
+    #ifdef _WIN32
+        system("pause");
+    #else
+        getchar();
+    #endif
+}
+
 bool digitCheck(char key[]) {
     for (unsigned int i = 0; i < strlen(key); i++)
     {
