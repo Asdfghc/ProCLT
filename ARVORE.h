@@ -162,7 +162,7 @@ int menorIdadeArvore(Arvore* arvore) {
 
 No* removeSubArvore(No* pai, int matricula) {
     if (pai == NULL) {
-        printf("Nó %d não encontrado na árvore\n", matricula);
+        printf("Matricula %d não encontrada\n", matricula);
         return pai;
     }
     if (matricula > pai->matricula) {
@@ -237,7 +237,7 @@ No* buscaArvore(Arvore* arvore, int matricula) {
 bool existeNaArvore(Arvore* arvore, int matricula) {
     if (arvore->raiz == NULL) {
         printf("\n\t\tÁrvore vazia\n");
-        return NULL;
+        return false;
     }
     No* no = buscaArvore(arvore, matricula);
     if (no != NULL) {
