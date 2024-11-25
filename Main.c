@@ -75,7 +75,7 @@ int main() {
                    fscanf(ARQ, "%15s\n", salarioString);     
                    
                    salario = atof(salarioString);
-                   insereArvore(arvore, matricula, nome, idade, cargo, salario);
+                   arvore->raiz = inserirAVL(arvore->raiz, matricula, nome, idade, cargo, salario);
                 }
 
                 fclose(ARQ);
@@ -184,9 +184,7 @@ int main() {
                 } while(outOfRange(salario,99999,0) || !digitCheck(inputSalario));
              
 
-                insereArvore(arvore, matricula, nome, idade, cargo, salario);
-
-                
+                arvore->raiz = inserirAVL(arvore->raiz, matricula, nome, idade, cargo, salario);
 
                 printf("\n\n\tFuncionário inserido com sucesso...\n\n");
                 printf("Pressione Enter para continuar..."); 
@@ -202,7 +200,8 @@ int main() {
                     if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula))     printf("\n\n\tMatrícula inválida!\n\n");
                 } while(outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula));
                 if(existeNaArvore(arvore,matricula)){
-                    if (removeArvore(arvore, matricula)) printf("\n\n\tFuncionário removido com sucesso...\n\n");
+                    arvore->raiz = removerAVL(arvore->raiz, matricula); 
+                    printf("\n\n\tFuncionário removido com sucesso...\n\n");
                 }
                 else{
                     printf("\n\tMatricula nao encontrada!\n");
@@ -297,7 +296,16 @@ int main() {
                 printf("\n\n\tDados salvos e memória liberada. Programa encerrado...\n\n");
                 
                 break;
-
+            case 10: 
+                if (estaBalanceada(arvore->raiz)) {
+                    printf("\n\n\tA árvore está balanceada.\n\n");
+                } else {
+                    printf("\n\n\tA árvore NÃO está balanceada.\n\n");
+                }
+                printf("Pressione Enter para continuar...");
+                getchar();
+                pauseScreen();
+                break;
             default:
                 printf("\n\n\tDigite uma opção válida!\n\n");
                 printf("Pressione Enter para continuar..."); 
