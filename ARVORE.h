@@ -112,7 +112,7 @@ No* maiorIdadeSubArvore(No* no, int maiorIdade) {
 No *maiorIdadeArvore(Arvore* arvore) {
     if (arvore -> raiz == NULL) {
         printf("Arvore vazia\n");
-        return 0;
+        return NULL;
     }
     return maiorIdadeSubArvore(arvore -> raiz, 0);
 }
@@ -151,7 +151,7 @@ No* menorIdadeSubArvore(No* no, int menorIdade) {
 No* menorIdadeArvore(Arvore* arvore) {
     if (arvore -> raiz == NULL) {
         printf("Arvore vazia\n");
-        return 0;
+        return NULL;
     }
     return menorIdadeSubArvore(arvore -> raiz, 99);
 }
@@ -206,7 +206,7 @@ int removeArvore(Arvore* arvore, int matricula) {
 
 No* buscaSubArvore(No* no, int matricula) {
     if (no == NULL) {
-        //printf("No %d nao encontrado na arvore\n", matricula);
+        printf("Funcionario de matricula %d nao encontrado na arvore\n", matricula);
         return NULL;
     }
     if (matricula > no->matricula) {
@@ -220,7 +220,9 @@ No* buscaSubArvore(No* no, int matricula) {
 
 No* buscaArvore(Arvore* arvore, int matricula) {
     if (arvore->raiz == NULL) {
-        printf("\n\t\tArvore vazia\n");
+        printf("\n\t\tArvore vazia\n\n");
+        printf("Pressione Enter para continuar...");
+        pauseScreen();
         return NULL;
     }
     No* no = buscaSubArvore(arvore -> raiz, matricula);

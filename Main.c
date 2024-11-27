@@ -88,18 +88,18 @@ int main() {
 
             case 2:
                 {
-                    do {
-                        printf("\n\t\tMatricula do funcionario: ");
-                        fflush(stdin);
-                        fgets(inputMatricula, sizeof(inputMatricula), stdin);
-                        matricula = atoi(inputMatricula);
-                        if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula))     printf("\n\n\tMatricula invalida!\n\n");
-                        if(!existeNaArvore(arvore,matricula)) printf("\n\n\tNenhum funcionario com essa matricula\n\n");
-                    } while(outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula) || !existeNaArvore(arvore,matricula));
+                    printf("\n\t\tMatricula do funcionario: ");
+                    fflush(stdin);
+                    fgets(inputMatricula, sizeof(inputMatricula), stdin);
+                    matricula = atoi(inputMatricula);
+                    if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula)) {
+                        printf("\n\n\tMatricula invalida!\n\n");
+                        pauseScreen();
+                        break;
+                    }
                     no = buscaArvore(arvore, matricula);
                     if (no == NULL) {
-                        printf("\n\n\tFuncionario nao encontrado...\n\n");
-                        printf("Pressione Enter para continuar...");
+                        printf("\n\n\tMatricula nao encontrada!\n\n");
                         pauseScreen();
                         break;
                     }
@@ -201,13 +201,15 @@ int main() {
 
             case 4:
                 {
-                    do {
-                        printf("\n\t\tMatricula do funcionario: ");
-                        fflush(stdin);
-                        fgets(inputMatricula, sizeof(inputMatricula), stdin);
-                        matricula = atoi(inputMatricula);
-                        if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula))     printf("\n\n\tMatricula invalida!\n\n");
-                    } while(outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula));
+                    printf("\n\t\tMatricula do funcionario: ");
+                    fflush(stdin);
+                    fgets(inputMatricula, sizeof(inputMatricula), stdin);
+                    matricula = atoi(inputMatricula);
+                    if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula)) {
+                        printf("\n\n\tMatricula invalida!\n\n");
+                        pauseScreen();
+                        break;
+                    }
                     if(existeNaArvore(arvore,matricula)){
                         if (removeArvore(arvore, matricula)) printf("\n\n\tFuncionario removido com sucesso...\n\n");
                     }
@@ -221,19 +223,15 @@ int main() {
 
             case 5:
                 {
-                    do {
-                        printf("\n\t\tMatricula do funcionario: ");
-                        fflush(stdin);
-                        fgets(inputMatricula, sizeof(inputMatricula), stdin);
-                        matricula = atoi(inputMatricula);
-                        if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula))     printf("\n\n\tMatricula invalida!\n\n");
-                        if(!existeNaArvore(arvore,matricula)) printf("\n\n\tNenhum funcionario com essa matricula\n\n");
-                    } while(outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula) || !existeNaArvore(arvore,matricula));
+                    printf("\n\t\tMatricula do funcionario: ");
+                    fflush(stdin);
+                    fgets(inputMatricula, sizeof(inputMatricula), stdin);
+                    matricula = atoi(inputMatricula);
+                    if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula)) {
+                        printf("\n\n\tMatricula invalida!\n\n");
+                    }
                     no = buscaArvore(arvore, matricula);
                     if (no == NULL) {
-                        printf("\n\n\tFuncionario nao encontrado!\n\n");
-                        printf("Pressione Enter para continuar...");
-                        pauseScreen();
                         break;
                     }
                     imprimeNo(no);
@@ -244,12 +242,11 @@ int main() {
 
             case 6:
                 {
-
-                    if (maiorIdadeArvore(arvore) -> idade != 0) {
+                    if (maiorIdadeArvore(arvore) != NULL) {
                         printf("\n\n\tFuncionario mais velho:\n");
                         imprimeNo(maiorIdadeArvore(arvore));
                     }
-                    if (menorIdadeArvore(arvore) -> idade != 99) {
+                    if (menorIdadeArvore(arvore) != NULL) {
                         printf("\n\n\tFuncionario mais novo:\n");
                         imprimeNo(menorIdadeArvore(arvore));
                     }
