@@ -30,20 +30,20 @@ int main() {
             clearScreen();
             printf("\n\t\t1. Inserir os dados\n");
             printf("\t\t2. Alterar um dado\n");
-            printf("\t\t3. Incluir novo funcionário\n");
-            printf("\t\t4. Remover um funcionário\n");
-            printf("\t\t5. Buscar as informações de um funcionário\n");
-            printf("\t\t6. Buscar o funcionário mais novo e mais velho\n");
-            printf("\t\t7. Buscar todos os funcionários de um cargo\n");
-            printf("\t\t8. Imprimir a árvore de funcionários\n");
+            printf("\t\t3. Incluir novo funcionario\n");
+            printf("\t\t4. Remover um funcionario\n");
+            printf("\t\t5. Buscar as informacoes de um funcionario\n");
+            printf("\t\t6. Buscar o funcionario mais novo e mais velho\n");
+            printf("\t\t7. Buscar todos os funcionarios de um cargo\n");
+            printf("\t\t8. Imprimir a arvore de funcionarios\n");
             printf("\t\t9. Sair\n");
-            printf("\n\tOpção: ");
+            printf("\n\tOpcao: ");
             fflush(stdin);
             fgets(opcao, sizeof(opcao), stdin);
             opcaoNum = atoi(opcao);
             if(!digitCheck(opcao)) {
                 clearScreen();
-                printf("\n\n\tDigite um número!\n\n");
+                printf("\n\n\tDigite um numero!\n\n");
                 printf("Pressione Enter para continuar...");
                 pauseScreen();
             }
@@ -89,16 +89,16 @@ int main() {
             case 2:
                 {
                     do {
-                        printf("\n\t\tMatrícula do funcionário: ");
+                        printf("\n\t\tMatricula do funcionario: ");
                         fflush(stdin);
                         fgets(inputMatricula, sizeof(inputMatricula), stdin);
                         matricula = atoi(inputMatricula);
-                        if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula))     printf("\n\n\tMatrícula inválida!\n\n");
+                        if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula))     printf("\n\n\tMatricula invalida!\n\n");
                         if(!existeNaArvore(arvore,matricula)) printf("\n\n\tNenhum funcionario com essa matricula\n\n");
                     } while(outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula) || !existeNaArvore(arvore,matricula));
                     no = buscaArvore(arvore, matricula);
                     if (no == NULL) {
-                        printf("\n\n\tFuncionário não encontrado...\n\n");
+                        printf("\n\n\tFuncionario nao encontrado...\n\n");
                         printf("Pressione Enter para continuar...");
                         pauseScreen();
                         break;
@@ -117,7 +117,7 @@ int main() {
                         fflush(stdin);
                         fgets(inputIdade, sizeof(inputIdade), stdin);
                         idade = atoi(inputIdade);
-                        if (outOfRange(idade,99,1) || !digitCheck(inputIdade))     printf("\n\n\tIdade inválida!\n\n");
+                        if (outOfRange(idade,99,1) || !digitCheck(inputIdade))     printf("\n\n\tIdade invalida!\n\n");
                     } while(outOfRange(idade,99,1) || !digitCheck(inputIdade));
                     no->idade = idade;
 
@@ -129,15 +129,15 @@ int main() {
                     strcpy(no->cargo, cargo);
 
                     do {
-                        printf("\n\n\tSalário: ");
+                        printf("\n\n\tSalario: ");
                         fflush(stdin);
                         fgets(inputSalario, sizeof(inputSalario), stdin);
                         salario = atoi(inputSalario);
-                        if (outOfRange(salario,99999,1) || !digitCheck(inputSalario))     printf("\n\n\tSalário inválido!\n\n");
+                        if (outOfRange(salario,99999,1) || !digitCheck(inputSalario))     printf("\n\n\tSalario invalido!\n\n");
                     } while(outOfRange(salario,99999,1) || !digitCheck(inputSalario));
                     no->salario = salario;
 
-                    printf("\n\n\tAlteração realizada com sucesso...\n\n");
+                    printf("\n\n\tAlteracao realizada com sucesso...\n\n");
 
                     printf("Pressione Enter para continuar...");
                     pauseScreen();
@@ -147,11 +147,11 @@ int main() {
             case 3:
                 {
                     do {
-                        printf("\n\t\tMatrícula do funcionário: ");
+                        printf("\n\t\tMatricula do funcionario: ");
                         fflush(stdin);
                         fgets(inputMatricula, sizeof(inputMatricula), stdin);
                         matricula = atoi(inputMatricula);
-                        if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula))     printf("\n\n\tMatrícula inválida!\n\n");
+                        if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula))     printf("\n\n\tMatricula invalida!\n\n");
                         if(existeNaArvore(arvore,matricula)) printf("\n\n\tExiste um funcionario com essa matricula\n\n");
                     } while(outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula) || !existeNaArvore(arvore,matricula));
 
@@ -167,7 +167,7 @@ int main() {
                         fflush(stdin);
                         fgets(inputIdade, sizeof(inputIdade), stdin);
                         idade = atoi(inputIdade);
-                        if (outOfRange(idade,99,1) || !digitCheck(inputIdade))     printf("\n\n\tIdade inválida!\n\n");
+                        if (outOfRange(idade,99,1) || !digitCheck(inputIdade))     printf("\n\n\tIdade invalida!\n\n");
                     } while(outOfRange(idade,99,1) || !digitCheck(inputIdade));
 
 
@@ -181,11 +181,11 @@ int main() {
 
 
                     do {
-                        printf("\n\n\tSalário: ");
+                        printf("\n\n\tSalario: ");
                         fflush(stdin);
                         fgets(inputSalario, sizeof(inputSalario), stdin);
                         salario = atoi(inputSalario);
-                        if (outOfRange(salario,99999,0) || !digitCheck(inputSalario))     printf("\n\n\tSalário inválido!\n\n");
+                        if (outOfRange(salario,99999,0) || !digitCheck(inputSalario))     printf("\n\n\tSalario invalido!\n\n");
                     } while(outOfRange(salario,99999,0) || !digitCheck(inputSalario));
 
 
@@ -193,7 +193,7 @@ int main() {
 
 
 
-                    printf("\n\n\tFuncionário inserido com sucesso...\n\n");
+                    printf("\n\n\tFuncionario inserido com sucesso...\n\n");
                     printf("Pressione Enter para continuar...");
                     pauseScreen();
                     break;
@@ -202,14 +202,14 @@ int main() {
             case 4:
                 {
                     do {
-                        printf("\n\t\tMatrícula do funcionário: ");
+                        printf("\n\t\tMatricula do funcionario: ");
                         fflush(stdin);
                         fgets(inputMatricula, sizeof(inputMatricula), stdin);
                         matricula = atoi(inputMatricula);
-                        if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula))     printf("\n\n\tMatrícula inválida!\n\n");
+                        if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula))     printf("\n\n\tMatricula invalida!\n\n");
                     } while(outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula));
                     if(existeNaArvore(arvore,matricula)){
-                        if (removeArvore(arvore, matricula)) printf("\n\n\tFuncionário removido com sucesso...\n\n");
+                        if (removeArvore(arvore, matricula)) printf("\n\n\tFuncionario removido com sucesso...\n\n");
                     }
                     else{
                         printf("\n\tMatricula nao encontrada!\n");
@@ -222,16 +222,16 @@ int main() {
             case 5:
                 {
                     do {
-                        printf("\n\t\tMatrícula do funcionário: ");
+                        printf("\n\t\tMatricula do funcionario: ");
                         fflush(stdin);
                         fgets(inputMatricula, sizeof(inputMatricula), stdin);
                         matricula = atoi(inputMatricula);
-                        if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula))     printf("\n\n\tMatrícula inválida!\n\n");
+                        if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula))     printf("\n\n\tMatricula invalida!\n\n");
                         if(!existeNaArvore(arvore,matricula)) printf("\n\n\tNenhum funcionario com essa matricula\n\n");
                     } while(outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula) || !existeNaArvore(arvore,matricula));
                     no = buscaArvore(arvore, matricula);
                     if (no == NULL) {
-                        printf("\n\n\tFuncionário não encontrado!\n\n");
+                        printf("\n\n\tFuncionario nao encontrado!\n\n");
                         printf("Pressione Enter para continuar...");
                         pauseScreen();
                         break;
@@ -246,11 +246,11 @@ int main() {
                 {
 
                     if (maiorIdadeArvore(arvore) -> idade != 0) {
-                        printf("\n\n\tFuncionário mais velho:\n");
+                        printf("\n\n\tFuncionario mais velho:\n");
                         imprimeNo(maiorIdadeArvore(arvore));
                     }
                     if (menorIdadeArvore(arvore) -> idade != 99) {
-                        printf("\n\n\tFuncionário mais novo:\n");
+                        printf("\n\n\tFuncionario mais novo:\n");
                         imprimeNo(menorIdadeArvore(arvore));
                     }
                     printf("Pressione Enter para continuar...");
@@ -260,14 +260,14 @@ int main() {
 
             case 7:
                 {
-                        printf("\n\t\tCargo do funcionário: ");
+                        printf("\n\t\tCargo do funcionario: ");
                         fflush(stdin);
                         fgets(cargo, sizeof(cargo), stdin);
                         cargo[strcspn(cargo, "\n")] = '\0';
                         toUpperString(cargo);
                         aumentaStringCargo(cargo);
                         clearScreen();
-                        printf("\n\n\tFuncionários com o cargo de %s: \n", cargo);
+                        printf("\n\n\tFuncionarios com o cargo de %s: \n", cargo);
                         imprimeCargo(arvore, cargo);
                         printf("Pressione Enter para continuar...");
                         pauseScreen();
@@ -278,17 +278,17 @@ int main() {
                 {
                     do {
                         clearScreen();
-                        printf("\n\n\tComo deseja a impressão?\n");
-                        printf("\t\t1. Pré-ordem\n");
+                        printf("\n\n\tComo deseja a impressao?\n");
+                        printf("\t\t1. Pre-ordem\n");
                         printf("\t\t2. Em ordem\n");
-                        printf("\t\t3. Pós-ordem\n");
-                        printf("\n\tOpção: ");
+                        printf("\t\t3. Pos-ordem\n");
+                        printf("\n\tOpcao: ");
                         fflush(stdin);
                         fgets(opcao, sizeof(opcao), stdin);
                         opcaoNum = atoi(opcao);
                         if(!digitCheck(opcao) || outOfRange(opcaoNum,3,1)) {
                             clearScreen();
-                            printf("\n\n\tDigite um número válido!\n\n");
+                            printf("\n\n\tDigite um numero valido!\n\n");
                             printf("Pressione Enter para continuar...");
                             pauseScreen();
                         }
@@ -314,12 +314,12 @@ int main() {
                     fclose(arquivo);
 
                     liberaArvore(arvore);
-                    printf("\n\n\tDados salvos e memória liberada. Programa encerrado...\n\n");
+                    printf("\n\n\tDados salvos e memoria liberada. Programa encerrado...\n\n");
 
                     break;
 
                 default:
-                    printf("\n\n\tDigite uma opção válida!\n\n");
+                    printf("\n\n\tDigite uma opcao valida!\n\n");
                     printf("Pressione Enter para continuar...");
                     pauseScreen();
                     break;

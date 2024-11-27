@@ -1,10 +1,6 @@
 #ifndef ARVORE_H_INCLUDED
 #define ARVORE_H_INCLUDED
 
-/* FUNCOES DE MANIPULACAO DE ARVORE
-
-*/
-
 typedef struct No {
     int matricula, idade;
     char nome[41], cargo[26];
@@ -61,7 +57,7 @@ void insereArvore(Arvore* arvore, int matricula, char nome[40], int idade, char 
 }
 
 void imprimeNo(No* no) {
-    printf("Matrícula: %d\nNome:%s\nIdade: %d\nCargo:%s\nSalário: %.2f\n\n", no -> matricula, no -> nome, no -> idade, no -> cargo, no -> salario);
+    printf("Matricula: %d\nNome:%s\nIdade: %d\nCargo:%s\nSalario: %.2f\n\n", no -> matricula, no -> nome, no -> idade, no -> cargo, no -> salario);
 }
 
 void imprimeSubArvore(No* no, int tipo) {
@@ -74,7 +70,7 @@ void imprimeSubArvore(No* no, int tipo) {
 
 void imprimeArvore(Arvore* arvore, int tipo) {
     if (arvore -> raiz == NULL) {
-        printf("Árvore vazia\n");
+        printf("Arvore vazia\n");
         return;
     }
     printf("\n");
@@ -115,7 +111,7 @@ No* maiorIdadeSubArvore(No* no, int maiorIdade) {
 
 No *maiorIdadeArvore(Arvore* arvore) {
     if (arvore -> raiz == NULL) {
-        printf("Árvore vazia\n");
+        printf("Arvore vazia\n");
         return 0;
     }
     return maiorIdadeSubArvore(arvore -> raiz, 0);
@@ -154,7 +150,7 @@ No* menorIdadeSubArvore(No* no, int menorIdade) {
 
 No* menorIdadeArvore(Arvore* arvore) {
     if (arvore -> raiz == NULL) {
-        printf("Árvore vazia\n");
+        printf("Arvore vazia\n");
         return 0;
     }
     return menorIdadeSubArvore(arvore -> raiz, 99);
@@ -162,7 +158,7 @@ No* menorIdadeArvore(Arvore* arvore) {
 
 No* removeSubArvore(No* pai, int matricula) {
     if (pai == NULL) {
-        printf("Matricula %d não encontrada\n", matricula);
+        printf("Matricula %d nao encontrada\n", matricula);
         return pai;
     }
     if (matricula > pai->matricula) {
@@ -196,7 +192,7 @@ No* removeSubArvore(No* pai, int matricula) {
 
 int removeArvore(Arvore* arvore, int matricula) {
     if (arvore->raiz == NULL) {
-        printf("\n\tÁrvore vazia");
+        printf("\n\tArvore vazia");
         return 0;
     }
     if (arvore->raiz->matricula == matricula && arvore->raiz->dir == NULL && arvore->raiz->esq == NULL) {
@@ -224,7 +220,7 @@ No* buscaSubArvore(No* no, int matricula) {
 
 No* buscaArvore(Arvore* arvore, int matricula) {
     if (arvore->raiz == NULL) {
-        printf("\n\t\tÁrvore vazia\n");
+        printf("\n\t\tArvore vazia\n");
         return NULL;
     }
     No* no = buscaSubArvore(arvore -> raiz, matricula);
@@ -236,7 +232,7 @@ No* buscaArvore(Arvore* arvore, int matricula) {
 
 bool existeNaArvore(Arvore* arvore, int matricula) {
     if (arvore->raiz == NULL) {
-        printf("\n\t\tÁrvore vazia\n");
+        printf("\n\t\tArvore vazia\n");
         return false;
     }
     No* no = buscaArvore(arvore, matricula);
@@ -265,7 +261,7 @@ void imprimeSubCargo(No* no, char cargo [26]){
 
 void imprimeCargo(Arvore* arvore, char cargo [25]){
     if (arvore -> raiz == NULL) {
-        printf("Árvore vazia\n");
+        printf("Arvore vazia\n");
         return;
     }
     imprimeSubCargo(arvore ->raiz, cargo);
