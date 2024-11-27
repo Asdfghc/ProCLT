@@ -132,7 +132,7 @@ int main() {
                         printf("\n\n\tSalario: ");
                         fflush(stdin);
                         fgets(inputSalario, sizeof(inputSalario), stdin);
-                        salario = atoi(inputSalario);
+                        salario = atof(inputSalario);
                         if (outOfRange(salario,99999,1) || !digitCheck(inputSalario))     printf("\n\n\tSalario invalido!\n\n");
                     } while(outOfRange(salario,99999,1) || !digitCheck(inputSalario));
                     no->salario = salario;
@@ -152,8 +152,8 @@ int main() {
                         fgets(inputMatricula, sizeof(inputMatricula), stdin);
                         matricula = atoi(inputMatricula);
                         if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula))     printf("\n\n\tMatricula invalida!\n\n");
-                        if(existeNaArvore(arvore,matricula)) printf("\n\n\tExiste um funcionario com essa matricula\n\n");
-                    } while(outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula) || !existeNaArvore(arvore,matricula));
+                        if(existeNaArvore(arvore,matricula)) printf("\n\n\tJa existe um funcionario com essa matricula\n\n");
+                    } while(outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula) || existeNaArvore(arvore,matricula));
 
                     printf("\n\n\t\t\tNome: ");
                     fflush(stdin);
@@ -184,7 +184,7 @@ int main() {
                         printf("\n\n\tSalario: ");
                         fflush(stdin);
                         fgets(inputSalario, sizeof(inputSalario), stdin);
-                        salario = atoi(inputSalario);
+                        salario = atof(inputSalario);
                         if (outOfRange(salario,99999,0) || !digitCheck(inputSalario))     printf("\n\n\tSalario invalido!\n\n");
                     } while(outOfRange(salario,99999,0) || !digitCheck(inputSalario));
 
@@ -229,6 +229,8 @@ int main() {
                     matricula = atoi(inputMatricula);
                     if (outOfRange(matricula,9999,1000) || !digitCheck(inputMatricula)) {
                         printf("\n\n\tMatricula invalida!\n\n");
+                        pauseScreen();
+                        break;
                     }
                     no = buscaArvore(arvore, matricula);
                     if (no == NULL) {

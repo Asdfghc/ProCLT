@@ -206,7 +206,6 @@ int removeArvore(Arvore* arvore, int matricula) {
 
 No* buscaSubArvore(No* no, int matricula) {
     if (no == NULL) {
-        printf("Funcionario de matricula %d nao encontrado na arvore\n", matricula);
         return NULL;
     }
     if (matricula > no->matricula) {
@@ -220,9 +219,6 @@ No* buscaSubArvore(No* no, int matricula) {
 
 No* buscaArvore(Arvore* arvore, int matricula) {
     if (arvore->raiz == NULL) {
-        printf("\n\t\tArvore vazia\n\n");
-        printf("Pressione Enter para continuar...");
-        pauseScreen();
         return NULL;
     }
     No* no = buscaSubArvore(arvore -> raiz, matricula);
@@ -233,10 +229,6 @@ No* buscaArvore(Arvore* arvore, int matricula) {
 }
 
 bool existeNaArvore(Arvore* arvore, int matricula) {
-    if (arvore->raiz == NULL) {
-        printf("\n\t\tArvore vazia\n");
-        return false;
-    }
     No* no = buscaArvore(arvore, matricula);
     if (no != NULL) {
         return true;
