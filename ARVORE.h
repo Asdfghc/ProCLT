@@ -1,7 +1,7 @@
 #ifndef ARVORE_H_INCLUDED
 #define ARVORE_H_INCLUDED
 
-/* FUNCOES DE MANIPULACAO DE ARVORE 
+/* FUNCOES DE MANIPULACAO DE ARVORE
 
 */
 
@@ -109,16 +109,16 @@ No* maiorIdadeSubArvore(No* no, int maiorIdade) {
                 return maiorIdadeSubArvore(no -> esq, maiorIdade);
             }
         }
-    }        
+    }
     return no;
 }
 
-int maiorIdadeArvore(Arvore* arvore) {
+No *maiorIdadeArvore(Arvore* arvore) {
     if (arvore -> raiz == NULL) {
         printf("Árvore vazia\n");
         return 0;
     }
-    return maiorIdadeSubArvore(arvore -> raiz, 0) -> idade;
+    return maiorIdadeSubArvore(arvore -> raiz, 0);
 }
 
 No* menorIdadeSubArvore(No* no, int menorIdade) {
@@ -148,16 +148,16 @@ No* menorIdadeSubArvore(No* no, int menorIdade) {
                 return menorIdadeSubArvore(no -> esq, menorIdade);
             }
         }
-    }        
+    }
     return no;
 }
 
-int menorIdadeArvore(Arvore* arvore) {
+No* menorIdadeArvore(Arvore* arvore) {
     if (arvore -> raiz == NULL) {
         printf("Árvore vazia\n");
         return 0;
     }
-    return menorIdadeSubArvore(arvore -> raiz, 99) -> idade;
+    return menorIdadeSubArvore(arvore -> raiz, 99);
 }
 
 No* removeSubArvore(No* pai, int matricula) {
@@ -171,7 +171,7 @@ No* removeSubArvore(No* pai, int matricula) {
         pai -> esq = removeSubArvore(pai -> esq, matricula);
     } else {
         //ACHOU O NO
-        
+
         if (pai->dir == NULL && pai->esq == NULL) {
             free(pai);
             pai = NULL;
@@ -279,7 +279,7 @@ int contarNos(No* no) {
 void salvarArvore(No* no, FILE* arquivo) {
     if (no == NULL) return;
 
-    
+
     salvarArvore(no->esq, arquivo);
 
     char salarioString[16];
@@ -291,17 +291,17 @@ void salvarArvore(No* no, FILE* arquivo) {
             break;
         }
     }
-    
-    fprintf(arquivo, "%-4d %-40s %-2d %-25s %15s\n",
-            no->matricula,       
-            no->nome,            
-            no->idade,           
-            no->cargo,           
-            salarioString);        
 
-    
+    fprintf(arquivo, "%-4d %-40s %-2d %-25s %15s\n",
+            no->matricula,
+            no->nome,
+            no->idade,
+            no->cargo,
+            salarioString);
+
+
     salvarArvore(no->dir, arquivo);
 }
 
 
-#endif 
+#endif
