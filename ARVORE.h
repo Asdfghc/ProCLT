@@ -5,6 +5,7 @@ typedef struct No {
     int matricula, idade;
     char nome[41], cargo[26];
     float salario;
+    int altura;
     struct No *esq, *dir;
 } No;
 
@@ -16,44 +17,6 @@ Arvore* criaArvore() {
     Arvore *arvore = (Arvore*) malloc(sizeof(Arvore));
     arvore -> raiz = NULL;
     return arvore;
-}
-
-void insereArvore(Arvore* arvore, int matricula, char nome[40], int idade, char cargo[25], float salario) {
-    No* novo = (No*) malloc(sizeof(No));
-    novo -> matricula = matricula;
-    novo -> idade = idade;
-    strcpy(novo -> nome, nome);
-    strcpy(novo -> cargo, cargo);
-    novo -> salario = salario;
-    novo -> esq = NULL;
-    novo -> dir = NULL;
-    if (arvore->raiz == NULL) {
-        arvore -> raiz = novo;
-    }
-    else {
-        int flag = 0;
-        No* pai = arvore -> raiz;
-        while (flag != 1) {
-            if (matricula > pai->matricula) {
-                if (pai->dir != NULL) {
-                    pai = pai -> dir;
-                }
-                else {
-                    pai -> dir = novo;
-                    flag = 1;
-                }
-            }
-            else {
-                if (pai->esq != NULL) {
-                    pai = pai -> esq;
-                }
-                else {
-                    pai -> esq = novo;
-                    flag = 1;
-                }
-            }
-        }
-    }
 }
 
 void imprimeNo(No* no) {
@@ -76,6 +39,124 @@ void imprimeArvore(Arvore* arvore, int tipo) {
     printf("\n");
     imprimeSubArvore(arvore -> raiz, tipo);
     printf("\n");
+}
+
+int altura(No *no) {
+    return no ? no->altura : 0;
+}
+
+void atualizaAltura(No *no) {
+    if (no) {
+        int alturaEsq = altura(no->esq);
+        int alturaDir = altura(no->dir);
+        no->altura = 1 + (alturaEsq > alturaDir ? alturaEsq : alturaDir);
+    }
+}
+
+int fatorBalanceamento(No *no) {
+    return no ? altura(no->esq) - altura(no->dir) : 0;
+}
+
+No* rotacaoDireita(No* y) {
+    No *x = y->esq;
+    No *T2 = x->dir;
+
+    x->dir = y;
+    y->esq = T2;
+
+    atualizaAltura(y);
+    atualizaAltura(x);
+
+    return x;
+}
+
+No* rotacaoEsquerda(No* x) {
+    No* y = x->dir;
+    No* T2 = y->esq;
+
+    y->esq = x;
+    x->dir = T2;
+
+    atualizaAltura(x);
+    atualizaAltura(y);
+
+    return y;
+}
+
+No *balancear(No *no) {
+    int fb = fatorBalanceamento(no);
+
+    if (fb > 1 && fatorBalanceamento(no->esq) >= 0)
+        return rotacaoDireita(no);
+
+    if (fb > 1 && fatorBalanceamento(no->esq) < 0) {
+        no->esq = rotacaoEsquerda(no->esq);
+        return rotacaoDireita(no);
+    }
+
+    if (fb < -1 && fatorBalanceamento(no->dir) <= 0)
+        return rotacaoEsquerda(no);
+
+    if (fb < -1 && fatorBalanceamento(no->dir) > 0) {
+        no->dir = rotacaoDireita(no->dir);
+        return rotacaoEsquerda(no);
+    }
+
+    return no;
+}
+
+No* inserirAVL(No* no, int matricula, char nome[], int idade, char cargo[], float salario) {
+    if (no == NULL) {
+        No *novo = (No *)malloc(sizeof(No));
+        novo->matricula = matricula;
+        strcpy(novo->nome, nome);
+        novo->idade = idade;
+        strcpy(novo->cargo, cargo);
+        novo->salario = salario;
+        novo->esq = novo->dir = NULL;
+        novo->altura = 1;
+        return novo;
+    }
+
+    if (matricula < no->matricula)  no->esq = inserirAVL(no->esq, matricula, nome, idade, cargo, salario);
+    else if (matricula > no->matricula) no->dir = inserirAVL(no->dir, matricula, nome, idade, cargo, salario);
+    else{
+        return no;
+    }
+    atualizaAltura(no);
+
+    return balancear(no);
+}
+
+No *removerAVL(No *no, int matricula) {
+    if (no == NULL)
+        return no;
+
+    if (matricula < no->matricula)
+        no->esq = removerAVL(no->esq, matricula);
+    else if (matricula > no->matricula)
+        no->dir = removerAVL(no->dir, matricula);
+    else {
+        if (no->esq == NULL || no->dir == NULL) {
+            No *temp = no->esq ? no->esq : no->dir;
+            free(no);
+            return temp;
+        } else {
+            No *temp = no->esq;
+            while (temp->dir != NULL)
+                temp = temp->dir;
+            no->matricula = temp->matricula;
+            strcpy(no->nome, temp->nome);
+            no->idade = temp->idade;
+            strcpy(no->cargo, temp->cargo);
+            no->salario = temp->salario;
+            no->esq = removerAVL(no->esq, temp->matricula);
+        }
+    }
+
+    atualizaAltura(no);
+
+    return balancear(no);
 }
 
 No* maiorIdadeSubArvore(No* no, int maiorIdade) {
@@ -118,54 +199,6 @@ No* menorIdadeArvore(Arvore* arvore) {
         return NULL;
     }
     return menorIdadeSubArvore(arvore -> raiz, 99) -> idade < 99 ? menorIdadeSubArvore(arvore -> raiz, 99) : NULL;
-}
-
-No* removeSubArvore(No* pai, int matricula) {
-    if (pai == NULL) {
-        printf("Matricula %d nao encontrada\n", matricula);
-        return pai;
-    }
-    if (matricula > pai->matricula) {
-        pai -> dir = removeSubArvore(pai -> dir, matricula);
-    } else if (matricula < pai->matricula) {
-        pai -> esq = removeSubArvore(pai -> esq, matricula);
-    } else {
-        //ACHOU O NO
-
-        if (pai->dir == NULL && pai->esq == NULL) {
-            free(pai);
-            pai = NULL;
-        } else if (pai->esq == NULL && pai->dir != NULL) {
-            No* aux = pai;
-            pai = pai -> dir;
-            free(aux);
-        } else if (pai->dir == NULL && pai->esq != NULL) {
-            No* aux = pai;
-            pai = pai -> esq;
-            free(aux);
-        } else if (pai->dir != NULL && pai->esq != NULL) {
-            No* aux = pai -> esq;
-            while (aux->dir != NULL) aux = aux -> dir;
-            pai -> matricula = aux -> matricula;
-            aux -> matricula = matricula;
-            pai -> esq = removeSubArvore(pai -> esq, matricula);
-        }
-    }
-    return pai;
-}
-
-int removeArvore(Arvore* arvore, int matricula) {
-    if (arvore->raiz == NULL) {
-        printf("\n\tArvore vazia");
-        return 0;
-    }
-    if (arvore->raiz->matricula == matricula && arvore->raiz->dir == NULL && arvore->raiz->esq == NULL) {
-        free(arvore -> raiz);
-        arvore -> raiz = NULL;
-    } else {
-        arvore -> raiz = removeSubArvore(arvore -> raiz, matricula);
-    }
-    return 1;
 }
 
 No* buscaSubArvore(No* no, int matricula) {
@@ -256,6 +289,23 @@ void salvarArvore(No* no, FILE* arquivo) {
 
     salvarArvore(no->dir, arquivo);
 }
+
+bool estaBalanceada(No *no) {
+    if (no == NULL) {
+        return true; 
+    }
+
+    int alturaEsq = altura(no->esq);
+    int alturaDir = altura(no->dir);
+    int fator = alturaEsq - alturaDir;
+
+    if (abs(fator) > 1) {
+        return false;
+    }
+
+    return estaBalanceada(no->esq) && estaBalanceada(no->dir);
+}
+
 
 
 #endif
