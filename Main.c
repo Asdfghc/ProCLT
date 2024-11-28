@@ -68,11 +68,9 @@ int main() {
                        fscanf(ARQ, "%d", &matricula);
                        fgetc(ARQ);
                        fgets(nome, 40, ARQ);
-                       nome[strcspn(nome, "\n")] = '\0';
                        fscanf(ARQ, "%d", &idade);
                        fgetc(ARQ);
                        fgets(cargo, 25, ARQ);
-                       cargo[strcspn(cargo, "\n")] = '\0';
                        fscanf(ARQ, "%15s\n", salarioString);
 
                        salario = atof(salarioString);
@@ -108,7 +106,6 @@ int main() {
                     printf("\n\n\t\t\tNome: ");
                     fflush(stdin);
                     fgets(nome, sizeof(nome), stdin);
-                    nome[strcspn(nome, "\n")] = '\0';
                     aumentaStringNome(nome);
                     strcpy(no->nome, nome);
 
@@ -124,7 +121,7 @@ int main() {
                     printf("\n\n\t\t\tCargo: ");
                     fflush(stdin);
                     fgets(cargo, sizeof(cargo), stdin);
-                    cargo[strcspn(cargo, "\n")] = '\0';
+                    toUpperString(cargo);
                     aumentaStringCargo(cargo);
                     strcpy(no->cargo, cargo);
 
@@ -158,9 +155,7 @@ int main() {
                     printf("\n\n\t\t\tNome: ");
                     fflush(stdin);
                     fgets(nome, sizeof(nome), stdin);
-                    nome[strcspn(nome, "\n")] = '\0';
                     aumentaStringNome(nome);
-
 
                     do {
                         printf("\n\n\tIdade: ");
@@ -174,7 +169,6 @@ int main() {
                     printf("\n\n\t\t\tCargo: ");
                     fflush(stdin);
                     fgets(cargo, sizeof(cargo), stdin);
-                    cargo[strcspn(cargo, "\n")] = '\0';
                     toUpperString(cargo);
                     aumentaStringCargo(cargo);
 
@@ -262,7 +256,6 @@ int main() {
                         printf("\n\t\tCargo do funcionario: ");
                         fflush(stdin);
                         fgets(cargo, sizeof(cargo), stdin);
-                        cargo[strcspn(cargo, "\n")] = '\0';
                         toUpperString(cargo);
                         aumentaStringCargo(cargo);
                         clearScreen();
@@ -316,8 +309,9 @@ int main() {
                     printf("\n\n\tDados salvos e memoria liberada. Programa encerrado...\n\n");
 
                     break;
+                }
 
-                default:
+                default: {
                     printf("\n\n\tDigite uma opcao valida!\n\n");
                     printf("Pressione Enter para continuar...");
                     pauseScreen();
