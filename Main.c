@@ -44,7 +44,6 @@ int main() {
             if(!digitCheck(opcao)) {
                 clearScreen();
                 printf("\n\n\tDigite um numero!\n\n");
-                printf("Pressione Enter para continuar...");
                 pauseScreen();
             }
         }while(!digitCheck(opcao));
@@ -57,7 +56,6 @@ int main() {
                     ARQ = fopen("Dados.txt", "r");
                     if (ARQ == NULL) {
                         printf("\n\n\tErro ao abrir o arquivo!\n\n");
-                        printf("Pressione Enter para continuar...");
                         pauseScreen();
                         break;
                     }
@@ -74,12 +72,11 @@ int main() {
                        fscanf(ARQ, "%15s\n", salarioString);
 
                        salario = atof(salarioString);
-                       insereArvore(arvore, matricula, nome, idade, cargo, salario);
+                       arvore->raiz = inserirAVL(arvore->raiz, matricula, nome, idade, cargo, salario);
                     }
 
                     fclose(ARQ);
                     printf("\n\n\tDados inseridos com sucesso...\n\n");
-                    printf("Pressione Enter para continuar...");
                     pauseScreen();
                     break;
                 }
@@ -110,7 +107,7 @@ int main() {
                     strcpy(no->nome, nome);
 
                     do {
-                        printf("\n\n\tIdade: ");
+                        printf("\n\n\t\t\tIdade: ");
                         fflush(stdin);
                         fgets(inputIdade, sizeof(inputIdade), stdin);
                         idade = atoi(inputIdade);
@@ -126,7 +123,7 @@ int main() {
                     strcpy(no->cargo, cargo);
 
                     do {
-                        printf("\n\n\tSalario: ");
+                        printf("\n\n\t\t\tSalario: ");
                         fflush(stdin);
                         fgets(inputSalario, sizeof(inputSalario), stdin);
                         salario = atof(inputSalario);
@@ -135,8 +132,6 @@ int main() {
                     no->salario = salario;
 
                     printf("\n\n\tAlteracao realizada com sucesso...\n\n");
-
-                    printf("Pressione Enter para continuar...");
                     pauseScreen();
                     break;
                 }
@@ -158,7 +153,7 @@ int main() {
                     aumentaStringNome(nome);
 
                     do {
-                        printf("\n\n\tIdade: ");
+                        printf("\n\n\t\t\tIdade: ");
                         fflush(stdin);
                         fgets(inputIdade, sizeof(inputIdade), stdin);
                         idade = atoi(inputIdade);
@@ -175,7 +170,7 @@ int main() {
 
 
                     do {
-                        printf("\n\n\tSalario: ");
+                        printf("\n\n\t\t\tSalario: ");
                         fflush(stdin);
                         fgets(inputSalario, sizeof(inputSalario), stdin);
                         salario = atof(inputSalario);
@@ -183,12 +178,11 @@ int main() {
                     } while(outOfRange(salario,99999,0) || !digitCheck(inputSalario));
 
 
-                    insereArvore(arvore, matricula, nome, idade, cargo, salario);
+                    arvore->raiz = inserirAVL(arvore->raiz, matricula, nome, idade, cargo, salario);
 
 
 
                     printf("\n\n\tFuncionario inserido com sucesso...\n\n");
-                    printf("Pressione Enter para continuar...");
                     pauseScreen();
                     break;
                 }
@@ -205,12 +199,12 @@ int main() {
                         break;
                     }
                     if(existeNaArvore(arvore,matricula)){
-                        if (removeArvore(arvore, matricula)) printf("\n\n\tFuncionario removido com sucesso...\n\n");
+                        arvore->raiz = removerAVL(arvore->raiz, matricula);
+                        printf("\n\n\tFuncionario removido com sucesso...\n\n");
                     }
                     else{
                         printf("\n\tMatricula nao encontrada!\n");
                     }
-                    printf("Pressione Enter para continuar...");
                     pauseScreen();
                     break;
                 }
@@ -228,10 +222,11 @@ int main() {
                     }
                     no = buscaArvore(arvore, matricula);
                     if (no == NULL) {
+                        printf("\n\n\tMatricula nao encontrada!\n\n");
+                        pauseScreen();
                         break;
                     }
                     imprimeNo(no);
-                    printf("Pressione Enter para continuar...");
                     pauseScreen();
                     break;
                 }
@@ -246,7 +241,6 @@ int main() {
                         printf("\n\n\tFuncionario mais novo:\n");
                         imprimeNo(menorIdadeArvore(arvore));
                     }
-                    printf("Pressione Enter para continuar...");
                     pauseScreen();
                     break;
                 }
@@ -261,7 +255,6 @@ int main() {
                         clearScreen();
                         printf("\n\n\tFuncionarios com o cargo de %s: \n", cargo);
                         imprimeCargo(arvore, cargo);
-                        printf("Pressione Enter para continuar...");
                         pauseScreen();
                     break;
                 }
@@ -281,14 +274,12 @@ int main() {
                         if(!digitCheck(opcao) || outOfRange(opcaoNum,3,1)) {
                             clearScreen();
                             printf("\n\n\tDigite um numero valido!\n\n");
-                            printf("Pressione Enter para continuar...");
                             pauseScreen();
                         }
 
                     }while(!digitCheck(opcao) || outOfRange(opcaoNum,3,1));
                     clearScreen();
                     imprimeArvore(arvore, opcaoNum-1);
-                    printf("Pressione Enter para continuar...");
                     pauseScreen();
                     break;
                 }
@@ -313,7 +304,6 @@ int main() {
 
                 default: {
                     printf("\n\n\tDigite uma opcao valida!\n\n");
-                    printf("Pressione Enter para continuar...");
                     pauseScreen();
                     break;
                 }

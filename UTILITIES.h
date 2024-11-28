@@ -34,7 +34,7 @@ void aumentaStringCargo (char str[26]){
     int tamanho = 24; 
     size_t len = strlen(str);
 
-    
+    str[strcspn(str, "\n")] = ' ';
     for(int i = len; i < tamanho; i++){
         str[i] = ' ';
     }
@@ -45,7 +45,7 @@ void aumentaStringNome (char str[41]){
     int tamanho = 39; 
     size_t len = strlen(str);
 
-    
+    str[strcspn(str, "\n")] = ' ';
     for(int i = len; i < tamanho; i++){
         str[i] = ' ';
     }
